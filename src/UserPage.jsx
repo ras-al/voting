@@ -43,7 +43,7 @@ export default function UserPage() {
   async function fetchParticipants() {
     const snap = await getDocs(collection(db, "participants"));
     const data = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setParticipants(data);
+    setParticipants(data.sort((a, b) => b.votes - a.votes));
     if (data.length > 0) {
       const max = data.reduce((a, b) => (a.votes > b.votes ? a : b));
       setWinner(max);
